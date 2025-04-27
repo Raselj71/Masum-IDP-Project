@@ -14,13 +14,18 @@ import Login from './pages/Login';
 import DoctorAppointments from './pages/Doctor/DoctorAppointments';
 import DoctorDashboard from './pages/Doctor/DoctorDashboard';
 import DoctorProfile from './pages/Doctor/DoctorProfile';
+import VideoCall from './pages/Doctor/VideoCall';
+import AgoraRTC, { AgoraRTCProvider } from "agora-rtc-react";
+
 
 const App = () => {
 
   const { dToken } = useContext(DoctorContext)
   const { aToken } = useContext(AdminContext)
+  const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
   return dToken || aToken ? (
+    <AgoraRTCProvider client={client}>
     <div className='bg-[#F8F9FD]'>
       <ToastContainer />
       <Navbar />
@@ -35,9 +40,11 @@ const App = () => {
           <Route path='/doctor-dashboard' element={<DoctorDashboard />} />
           <Route path='/doctor-appointments' element={<DoctorAppointments />} />
           <Route path='/doctor-profile' element={<DoctorProfile />} />
+          <Route path='/video-call/:id' element={<VideoCall />} />
         </Routes>
       </div>
     </div>
+    </AgoraRTCProvider>
   ) : (
     <>
       <ToastContainer />

@@ -41,33 +41,46 @@ const APP_CERTIFICATE = "80973f24e98d4a6fb85768c780d1409c";
 
 const onlineUsers = {};
 
-io.on('connection', (socket) => {
-  socket.on('register', ({ userId }) => {
-    onlineUsers[userId] = socket.id;
+io.on("connection", (socket) => {
+  console.log("User connected: ", socket.id);
+
+  socket.on("register", ({ userId }) => {
+    socket.join(userId);
+    console.log(`User ${userId} registered`);
   });
 
-  socket.on('call-user', ({ from, to, channel }) => {
-    const userSocketId = onlineUsers[to];
-    if (userSocketId) {
-      io.to(userSocketId).emit('incoming-call', { from, channel });
-    }
+  socket.on("call-user", ({ from, to, channelName }) => {
+    console.log(`Calling from ${from} to ${to} on channel ${channelName}`);
+    io.to(to).emit("incoming-call", { from, channelName });
   });
 
-  socket.on('disconnect', () => {
-    for (const [id, sockId] of Object.entries(onlineUsers)) {
-      if (sockId === socket.id) delete onlineUsers[id];
-    }
+  socket.on("disconnect", () => {
+    console.log("User disconnected: ", socket.id);
   });
 });
 
-app.get('/agora-token', (req, res) => {
-  const { channel, uid } = req.query;
+app.get("/api/token", (req, res) => {
+  const { channelName, uid } = req.query;
+  if (!channelName || !uid) {
+    return res.status(400).json({ error: "Missing channelName or uid" });
+  }
+
   const role = RtcRole.PUBLISHER;
-  const expireTime = 3600;
-  const token = RtcTokenBuilder.buildTokenWithUid(APP_ID, APP_CERTIFICATE, channel, uid, role, expireTime);
+  const expirationTimeInSeconds = 3600;
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  const privilegeExpireTs = currentTimestamp + expirationTimeInSeconds;
+
+  const token = RtcTokenBuilder.buildTokenWithUid(
+    APP_ID,
+    APP_CERTIFICATE,
+    channelName,
+    uid,
+    role,
+    privilegeExpireTs
+  );
+
   res.json({ token });
 });
-
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
