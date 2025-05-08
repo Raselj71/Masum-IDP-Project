@@ -1,3 +1,69 @@
+const Prescription = require('../models/prescriptionModel');
+
+const const Prescription = require('../models/prescriptionModel');
+
+const createPrescription = async (req, res) => {
+  try {
+    const { patient, doctor, medicines, notes } = req.body;
+    const prescription = new Prescription({
+      patient,
+      doctor,
+      medicines,
+      notes,
+    });
+    await prescription.save();
+    res.status(201).json(prescription);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getPrescriptionById = async (req, res) => {
+  try {
+    const prescription = await Prescription.findById(req.params.id).populate('patient doctor');
+    if (!prescription) {
+      return res.status(404).json({ message: 'Prescription not found' });
+    }
+    res.status(200).json(prescription);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Add more methods like getAllPrescriptions, updatePrescription, etc.
+
+module.exports = { createPrescription, getPrescriptionById };
+createPrescription = async (req, res) => {
+  try {
+    const { patient, doctor, medicines, notes } = req.body;
+    const prescription = new Prescription({
+      patient,
+      doctor,
+      medicines,
+      notes,
+    });
+    await prescription.save();
+    res.status(201).json(prescription);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getPrescriptionById = async (req, res) => {
+  try {
+    const prescription = await Prescription.findById(req.params.id).populate('patient doctor');
+    if (!prescription) {
+      return res.status(404).json({ message: 'Prescription not found' });
+    }
+    res.status(200).json(prescription);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Add more methods like getAllPrescriptions, updatePrescription, etc.
+
+module.exports = { createPrescription, getPrescriptionById };
 import jwt from "jsonwebtoken";
 import appointmentModel from "../models/appointmentModel.js";
 import doctorModel from "../models/doctorModel.js";

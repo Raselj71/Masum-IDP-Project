@@ -1,0 +1,257 @@
+latex
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+
+\geometry{a4paper, margin=1in}
+
+\title{MediLink Application: Manual Testing Report}
+\author{AI Assistant}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+The MediLink application, designed for seamless doctor-patient interaction, has undergone rigorous manual testing across several modules. This document details the methodologies employed for the "Create Account," "Login," "Appointment Booking," "Payment," "Add Doctor," and "Video Call" modules. Testing included validating user inputs, verifying system responses, and ensuring security. The tests were executed according to provided test cases, and the results were documented and reviewed. The primary objective was to identify and correct any issues to improve the overall quality and user experience of the application. The test processes and outcomes are described in detail below.
+
+\section{Terms Used in This Report}
+\noindent
+\textbf{Test Scenario ID:} Identifier for a group of test cases focusing on a specific feature. \\
+\textbf{Test Scenario Description:} Brief explanation of the feature being tested. \\
+\textbf{Test Case ID:} Unique identifier for each individual test case. \\
+\textbf{Test Case Description:} Detailed explanation of the specific test being performed. \\
+\textbf{Test Steps:} Step-by-step instructions to execute the test case. \\
+\textbf{Preconditions:} Conditions that must be met before executing the test case. \\
+\textbf{Test Data:} Specific input data used during the test. \\
+\textbf{Post Condition:} The state of the system after the test execution. \\
+\textbf{Expected Result:} The anticipated outcome of the test case. \\
+\textbf{Actual Result:} The observed outcome after executing the test case. \\
+\textbf{Status:} The outcome of the test (Pass/Fail). \\
+\textbf{Executed By:} The person who performed the test. \\
+\textbf{Executed Date:} The date on which the test was performed. \\
+\textbf{Comment (If any):} Additional notes or observations about the test case. \\
+
+\section{Create Account Module Testing}
+
+\subsection{Test Scenarios (C001)}
+
+\begin{itemize}
+    \item \textbf{Test001 (Valid Credentials):}
+    \begin{itemize}
+        \item \textbf{Description:} Assess successful account creation with valid username, email, and password.
+        \item \textbf{Process:} Tester enters a valid username (string, no special characters/digits), valid email (with "@"), and a strong password (8+ characters, including uppercase, lowercase, and a digit). Clicks "Create Account."
+        \item \textbf{Expected Result:} "Account Create Successful" message.
+        \item \textbf{Actual Result:} Account created; "Successful Account Creation" message displayed.
+    \end{itemize}
+    \item \textbf{Test002 (Invalid Username):}
+    \begin{itemize}
+        \item \textbf{Description:} Verify system response to an invalid username.
+        \item \textbf{Process:} Tester enters an invalid username (special characters/digits), valid email and password. Clicks "Create Account."
+        \item \textbf{Expected Result:} "Invalid Credential" message.
+        \item \textbf{Actual Result:} "Invalid Credential" message displayed, account not created.
+    \end{itemize}
+    \item \textbf{Test003 (Invalid Email \& Password):}
+    \begin{itemize}
+        \item \textbf{Description:} Check system's response to invalid email and password.
+        \item \textbf{Process:} Tester enters a valid username, invalid email (missing "@" or incorrect format), and weak password (less than 8 characters). Clicks "Create Account."
+        \item \textbf{Expected Result:} "Invalid Credential" message.
+        \item \textbf{Actual Result:} "Invalid Credential" message displayed, account not created.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Preconditions}
+Strict format requirements for usernames, emails, and passwords.
+
+\subsection{Review}
+Reviewed by Tamim Zia at 27/04/2025, Created by Masum Hossain at 25/04/2025.
+
+\section{Login Module Testing}
+
+\subsection{Test Scenarios (L001)}
+
+\begin{itemize}
+    \item \textbf{LS01 (Invalid Username \& Password):}
+    \begin{itemize}
+        \item \textbf{Description:} Test response to incorrect credentials.
+        \item \textbf{Process:} Tester enters incorrect username and password, clicks "Login."
+        \item \textbf{Expected Result:} "Warning Message: 'Invalid Credential'".
+        \item \textbf{Actual Result:} "Warning Message: Wrong Username and Password" displayed; login failed.
+    \end{itemize}
+    \item \textbf{LS02 (Valid Username \& Invalid Password):}
+    \begin{itemize}
+        \item \textbf{Description:} Check system with correct username but wrong password.
+        \item \textbf{Process:} Tester enters a valid username and incorrect password, clicks "Login."
+        \item \textbf{Expected Result:} "Warning Message: 'Invalid Credential'".
+        \item \textbf{Actual Result:} "Warning Message: Wrong Username and Password" displayed; login failed.
+    \end{itemize}
+    \item \textbf{LS03 (Valid Username \& Password):}
+    \begin{itemize}
+        \item \textbf{Description:} Verify successful login with correct credentials.
+        \item \textbf{Process:} Tester enters valid username and matching password, clicks "Login."
+        \item \textbf{Expected Result:} "Successfully login" message, redirect to dashboard.
+        \item \textbf{Actual Result:} "Successfully login" message displayed, user logged in.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Preconditions}
+Password must meet complexity requirements (uppercase, lowercase, special character, minimum 8 characters).
+
+\subsection{Review}
+The Test Case was reviewed by Masum Hossain at 04/05/2025 and created by Kamrul Hassan at 28/05/2025.
+
+\section{Appointment Booking Module Testing}
+
+\subsection{Test Scenarios (A001)}
+
+\begin{itemize}
+    \item \textbf{APT01 (Valid Appointment Booking):}
+    \begin{itemize}
+        \item \textbf{Description:} Test successful appointment booking.
+        \item \textbf{Process:} Patient selects medical consultation, chooses a doctor, selects an available slot, and confirms booking.
+        \item \textbf{Expected Result:} Successful booking, payment processed, payment redirection.
+        \item \textbf{Actual Result:} "Successfully booked and Payment done" message, booking completed.
+    \end{itemize}
+    \item \textbf{APT02 (Invalid Appointment Booking - Doctor's Off-Day):}
+    \begin{itemize}
+        \item \textbf{Description:} Verify booking failure on a doctor's off-day.
+        \item \textbf{Process:} Patient selects consultation, doctor, and a slot on the doctor's off-day.
+        \item \textbf{Expected Result:} Booking failure; relevant error message.
+        \item \textbf{Actual Result:} "Failed to book caused its offday of that doctor" message.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Preconditions}
+System must check for doctor's availability.
+
+\subsection{Review}
+The Test Case was reviewed by Tamim Zia at 04/05/2025 and created by Kamrul Hassan at 03/05/2025.
+
+\section{Payment Module Testing}
+
+\subsection{Test Scenarios (P001)}
+
+\begin{itemize}
+    \item \textbf{PT001 (Invalid Payment - Incorrect OTP):}
+    \begin{itemize}
+        \item \textbf{Description:} Test with incorrect OTP.
+        \item \textbf{Process:} Patient selects payment method (mobile banking), enters number, provides an incorrect OTP.
+        \item \textbf{Expected Result:} Payment rejected; failure message.
+        \item \textbf{Actual Result:} "Failed to payment, Caused of Incorrect OPT" message.
+    \end{itemize}
+    \item \textbf{PT002 (Invalid Payment - Incorrect Password):}
+    \begin{itemize}
+        \item \textbf{Description:} Test with an incorrect password.
+        \item \textbf{Process:} Patient selects payment method, enters number, provides valid OTP but incorrect password.
+        \item \textbf{Expected Result:} Payment rejected; failure message.
+        \item \textbf{Actual Result:} "Failed to payment, Caused of Incorrect Password" message.
+    \end{itemize}
+    \item \textbf{PT003 (Successful Payment):}
+    \begin{itemize}
+        \item \textbf{Description:} Test with valid payment details.
+        \item \textbf{Process:} Patient selects payment method, enters number, provides valid OTP and password.
+        \item \textbf{Expected Result:} Successful payment; confirmation, dashboard redirect.
+        \item \textbf{Actual Result:} "Payment Successful" message, payment completed.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Preconditions}
+Valid appointment ID required. Payment details must be accurate.
+
+\subsection{Review}
+The Test Case was reviewed by Masum Hossain at 04/05/2025 and created by Kamrul Hassan at 03/05/2025.
+
+\section{Add Doctor Module Testing}
+
+\subsection{Test Scenarios (TS\_ADD\_DOC\_01)}
+
+\begin{itemize}
+    \item \textbf{TC\_ADD\_DOC\_01 (Valid Doctor Details):}
+    \begin{itemize}
+        \item \textbf{Description:} Ensure successful addition of a new doctor with valid details.
+        \item \textbf{Process:} Admin enters all fields (Name, Specialization, Email, Phone) with valid data and clicks "Add Doctor."
+        \item \textbf{Expected Result:} Success message; doctor appears in the list.
+        \item \textbf{Actual Result:} Doctor added; success message shown.
+    \end{itemize}
+    \item \textbf{TC\_ADD\_DOC\_02 (Missing Required Details):}
+    \begin{itemize}
+        \item \textbf{Description:} Check system response when required fields are missing.
+        \item \textbf{Process:} Admin leaves name blank, fills other fields, and clicks "Add Doctor."
+        \item \textbf{Expected Result:} "Name is required" error; doctor not added.
+        \item \textbf{Actual Result:} "Name is required" error displayed; doctor not added.
+    \end{itemize}
+    \item \textbf{TC\_ADD\_DOC\_03 (Invalid Email Format):}
+    \begin{itemize}
+        \item \textbf{Description:} Test if the system handles an invalid email format correctly.
+        \item \textbf{Process:} Admin enters an invalid email, fills other fields, and clicks "Add Doctor."
+        \item \textbf{Expected Result:} "Invalid email format" error; doctor not added.
+        \item \textbf{Actual Result:} "Invalid email format" error displayed; doctor not added.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Preconditions}
+Admin must be logged in, and the "Add Doctor" page must be accessible.
+
+\subsection{Review}
+The Test Case was reviewed by Masum Hossain at 05/05/2025 and created by Masum Hossain at 04/05/2025.
+
+\section{Video Call Module Testing}
+
+\subsection{Test Scenarios (TS\_VIDEO\_CALL\_01)}
+
+\begin{itemize}
+    \item \textbf{TC\_VIDEO\_CALL\_01 (Successful Video Call):}
+    \begin{itemize}
+        \item \textbf{Description:} Test a successful video call between user and doctor.
+        \item \textbf{Process:} User logs in, selects a doctor, clicks "Start Video Call," doctor accepts.
+        \item \textbf{Expected Result:} Video call established; both parties can see and hear each other.
+        \item \textbf{Actual Result:} Video call successful; communication enabled.
+    \end{itemize}
+    \item \textbf{TC\_VIDEO\_CALL\_02 (Offline Doctor):}
+    \begin{itemize}
+        \item \textbf{Description:} Check system's response to calling an offline doctor.
+        \item \textbf{Process:} User logs in, selects an offline doctor, and clicks "Start Video Call."
+        \item \textbf{Expected Result:} No call; "Doctor is offline" message.
+        \item \textbf{Actual Result:} "Doctor is offline" message displayed.
+    \end{itemize}
+    \item \textbf{TC\_VIDEO\_CALL\_03 (Call Termination):}
+    \begin{itemize}
+        \item \textbf{Description:} Test ending a call properly.
+        \item \textbf{Process:} During a call, the "End Call" button is clicked.
+        \item \textbf{Expected Result:} Call ends gracefully; windows close.
+        \item \textbf{Actual Result:} Call ended; connections closed.
+    \end{itemize}
+    \item \textbf{TC\_VIDEO\_CALL\_04 (Poor Internet Connection):}
+    \begin{itemize}
+        \item \textbf{Description:} Test call quality under poor network conditions.
+        \item \textbf{Process:} User and doctor log in, both with poor internet, attempt a video call.
+        \item \textbf{Expected Result:} Connection attempt; poor audio/video quality.
+        \item \textbf{Actual Result:} Call connected, but with low audio and video quality.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Preconditions}
+User and doctor must be logged in; the video call feature must be enabled.
+
+\subsection{Review}
+The Test Case was reviewed by Masum Hossain at 05/05/2025 and created by Masum Hossain at 04/05/2025.
+
+\section{Conclusion}
+
+The MediLink application's core functionalities have been thoroughly validated through manual testing. The system accurately manages user inputs, securely processes sensitive data, and robustly handles various scenarios. The application proved reliable and ready for further development and release. Key highlights include correct handling of invalid credentials, secure payment processing, effective doctor management, and functional video calls. Overall testing shows that the system is working fine.
+
+\begin{itemize}
+    \item \textbf{Create Account:} Correctly handles valid and invalid credentials.
+    \item \textbf{Login:} Securely authenticates users and rejects invalid login attempts.
+    \item \textbf{Appointment Booking:} Allows valid bookings and correctly rejects bookings during unavailable times.
+    \item \textbf{Payment:} Securely handles payments and rejects invalid payment attempts.
+    \item \textbf{Add Doctor:} Allows valid additions and rejects invalid data.
+    \item \textbf{Video call}: Connects the doctor with the user under valid cases. also handle some edge cases.
+    \item The full testing process was reviewed and executed successfully.
+\end{itemize}
+
+\end{document}

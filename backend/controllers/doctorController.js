@@ -67,6 +67,27 @@ const appointmentCancel = async (req, res) => {
 
 }
 
+// API to add prescription for doctor
+const addPrescription = async (req, res) => {
+    try {
+
+        const { appointmentId, prescription } = req.body
+
+        const appointment = await appointmentModel.findById(appointmentId)
+
+        if (!appointment) {
+            return res.json({ success: false, message: 'No Appointment found with this Id' })
+        }
+        const updatedAppointment = await appointmentModel.findByIdAndUpdate(appointmentId, { prescription }, { new: true })
+        res.json({ success: true, updatedAppointment })
+
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
+}
+
+
 // API to mark appointment completed for doctor panel
 const appointmentComplete = async (req, res) => {
     try {
@@ -199,5 +220,6 @@ export {
     appointmentComplete,
     doctorDashboard,
     doctorProfile,
-    updateDoctorProfile
+    updateDoctorProfile,
+    addPrescription
 }
